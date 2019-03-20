@@ -10,25 +10,26 @@ class QRDescomposition
     public: 
   
     // Data Members 
-    double data[3][3];
-    double A[3][3];
-    double Q[3][3];
-    double Qt[3][3];
-    double R[3][3];
-    double QtxA[3][3];
-    double AxQ[3][3];
+    double data[3][3]; //original matrix
+    double A[3][3]; //copy of the original matrix
+    double Q[3][3]; // Q matrix (QR descomposition)
+    double Qt[3][3]; // Q matrix transposed
+    double R[3][3]; // R matrix (QR descomposition)
+    double QtxA[3][3]; // Qt*A matrix 
+    double AxQ[3][3]; // A*Q matrix 
 
     // Member Functions() 
 
+    //print the diagonal (when QR iteration has sufficient iterations the diagonal of the matrix aproximates to the eigenvalues)
     void print_Diagonal() 
     { 
-        
         for(int j = 0; j<3; j++){
             cout << data[j][j] << ",";
         }
         cout << endl;
     } 
 
+    //this function prints a 3x3 matrix
     void print_Matrix(double matrix[3][3]) 
     { 
         for(int i = 0; i<3; i++){
@@ -40,12 +41,15 @@ class QRDescomposition
         cout << endl;
     } 
 
+
+    //this function prints the original matrix 
     void print_Data() 
     { 
         cout << "Printing Data "<< endl;
         print_Matrix(data);
     } 
 
+    //this function prints a copy of the original matrix 
     void print_A() 
     { 
         cout << "Printing A "<< endl;
@@ -82,6 +86,7 @@ class QRDescomposition
         print_Matrix(AxQ);
     }  
 
+    //this function set the data of the object
     void set_Data(double input[3][3]) 
     { 
         for(int i = 0; i<3; i++){
@@ -106,6 +111,7 @@ class QRDescomposition
         gram_Schmidt();
     }
 
+    //this function computes the square root of a number
     double sqrt(double num){
         if( num < 0 ) return -1;
         if( num == 0 ) return 0;
@@ -129,6 +135,7 @@ class QRDescomposition
         return guess;
     }
 
+    // this function descompose the matrix in the Q and R matrixes
     void gram_Schmidt(){
         int k, i, j;
 
@@ -164,6 +171,7 @@ class QRDescomposition
     }
 }; 
 
+//this function multiplies two matrixes
 void mat_Mult(double A[3][3], double B[3][3], double C[3][3]){
     for(int i = 0; i<3; i++){
             for(int j = 0; j<3; j++){
@@ -183,6 +191,7 @@ void mat_Mult(double A[3][3], double B[3][3], double C[3][3]){
     }
 }
 
+//QR iteration function
 void QR_Algorithm(QRDescomposition& qrDescomp, int count){
 
     //qrDescomp.print_Data();
@@ -205,12 +214,6 @@ void QR_Algorithm(QRDescomposition& qrDescomp, int count){
     }
 
     
-}
-
-void funct(QRDescomposition& obj){
-    cout << obj.data[1][1];
-    obj.data[1][1] = 0;
-    cout << obj.data[1][1];
 }
 
 int main (){
